@@ -10,4 +10,5 @@ export interface IAdministratorsRepository {
 	create(params: {administrators: IAdministratorsCreate }): Promise<IAdministrators>;
 	readList(params: IAdministratorsReadListParamsPagination): Promise<Array<IAdministrators>>;
 	readListCount(params: IAdministratorsReadListParamsPagination): Promise<number>;
+	readOne(params: { administratorId: string }): Promise<IAdministrators | null>;
 }
