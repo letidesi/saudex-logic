@@ -1,16 +1,17 @@
 
 import { AppError } from "AppError";
-import { AdministratorsCreateUseCase, IAdministratorsCreateDTO, IAdministratorsRepository } from "../../../modules/administrators";
+import { IAdministratorCreateDTO } from "../../../modules/administrators/useCases/create/administratorCreate.DTO";
+import { AdministratorCreateUseCase } from "../../../modules/administrators/useCases/create/administratorCreate.useCases";
 import { AdministratorsServiceMock } from "../mock/administrators.mock";
 import { administratorsMockList } from "../mock/administrators.mockList";
 
 
 function createSUT(): {
-	sut: AdministratorsCreateUseCase;
+	sut: AdministratorCreateUseCase;
 	administratorsServiceMock: AdministratorsServiceMock;
 } {
 	const administratorsServiceMock = new AdministratorsServiceMock();
-	const administratorsCreateUseCase = new AdministratorsCreateUseCase(administratorsServiceMock);
+	const administratorsCreateUseCase = new AdministratorCreateUseCase(administratorsServiceMock);
 
 	return {
 		sut: administratorsCreateUseCase,
@@ -18,7 +19,7 @@ function createSUT(): {
 	};
 }
 
-describe('Administrators Create', () => {
+describe('Administrator Create', () => {
 	const { sut, administratorsServiceMock: administratorsServiceMock } = createSUT();
 
 	const name = administratorsMockList[0].name;
@@ -29,7 +30,7 @@ describe('Administrators Create', () => {
 	describe('Given the correct parameters', () => {
 
 		it('should create a new form', async () => {
-			const dto: IAdministratorsCreateDTO = { _id: createdAdminId, name: name, email: email, password: password, termsOfUse: termsOfUse };
+			const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: email, password: password, termsOfUse: termsOfUse };
 
 			const createdAdministrators = await sut.exec(dto);
 
@@ -48,7 +49,7 @@ describe('Administrators Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorsCreateDTO = { _id: createdAdminId, name: '', email: email, password: password, termsOfUse: termsOfUse};
+				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: '', email: email, password: password, termsOfUse: termsOfUse};
 
 				await sut.exec(dto);
 			} catch (error) {
@@ -63,7 +64,7 @@ describe('Administrators Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorsCreateDTO = { _id: createdAdminId, name: name, email: '', password: password, termsOfUse: termsOfUse};
+				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: '', password: password, termsOfUse: termsOfUse};
 
 				await sut.exec(dto);
 			} catch (error) {
@@ -78,7 +79,7 @@ describe('Administrators Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorsCreateDTO = { _id: createdAdminId, name: name, email: email, password: '', termsOfUse: termsOfUse};
+				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: email, password: '', termsOfUse: termsOfUse};
 
 				await sut.exec(dto);
 			} catch (error) {
@@ -93,7 +94,7 @@ describe('Administrators Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorsCreateDTO = { _id: createdAdminId, name: name, email: email, password: password, termsOfUse: ''};
+				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: email, password: password, termsOfUse: ''};
 
 				await sut.exec(dto);
 			} catch (error) {
