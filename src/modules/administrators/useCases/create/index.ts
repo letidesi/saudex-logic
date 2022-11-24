@@ -1,2 +1,2 @@
-export * from './administratorsCreate.DTO';
-export * from './administratorsCreate.useCases';
+export * from './administratorCreate.DTO';
+export * from './administratorCreate.useCases';
