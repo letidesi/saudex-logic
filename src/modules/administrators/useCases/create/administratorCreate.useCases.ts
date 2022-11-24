@@ -1,14 +1,14 @@
 import { AppError } from 'apperror';
 import { IAdministrators } from '../../repository/administrators.model';
 import { IAdministratorsRepository } from '../../repository/administrators.repository';
-import { IAdministratorsCreateDTO, IAdministratorsCreateResponse } from './administratorsCreate.DTO';
+import { IAdministratorCreateDTO, IAdministratorCreateResponse } from './administratorCreate.DTO';
 
 /**
- * Creates a new administrators
+ * Creates a new administrator
  */
-export class AdministratorsCreateUseCase {
+export class AdministratorCreateUseCase {
 	/**
-	 * Constructor for AdministratorsCreateUseCase
+	 * Constructor for AdministratorCreateUseCase
 	 * @param administratorsRepository - Inject a {@link IFormRepository} implementation
 	 */
 	constructor(private administratorsRepository: IAdministratorsRepository) {}
@@ -17,7 +17,7 @@ export class AdministratorsCreateUseCase {
 	 * @param dto - {@link IAdministratorsCreateDTO}
 	 * @returns The created administratorsCreateUseCase
 	 */
-	async exec(dto: IAdministratorsCreateDTO): Promise<IAdministratorsCreateResponse> {
+	async exec(dto: IAdministratorCreateDTO): Promise<IAdministratorCreateResponse> {
 		const { name, email, password, termsOfUse } = dto;
 		if (!name) {
 			throw new AppError({
