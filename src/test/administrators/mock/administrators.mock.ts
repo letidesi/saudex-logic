@@ -13,7 +13,8 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
         administrators: IAdministrators;
       }): Promise<IAdministrators> => {
         const { administrators } = params;
-        const { name, email, password, confirmPassword, termsOfUse } = administrators;
+        const { name, email, password, confirmPassword, termsOfUse } =
+          administrators;
         const newAdministrators: IAdministrators = {
           _id: "new_id",
           name,
@@ -60,19 +61,30 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
       }
     );
 
-    readOne = jest.fn().mockImplementation(async (params: { administratorId: string }): Promise<IAdministrators | null> => {
-      const { administratorId } = params;
-  
-      const admnistrators: IAdministrators | undefined = administratorsMockList.find(
-        (a: IAdministrators) => a._id?.toString() == administratorId,
-      );
-  
-      return admnistrators ?? null;
-    });
+  readOne = jest
+    .fn()
+    .mockImplementation(
+      async (params: {
+        administratorId: string;
+      }): Promise<IAdministrators | null> => {
+        const { administratorId } = params;
 
-    readOneByEmail = jest.fn().mockImplementation(async (params: { email: string }) => {
+        const admnistrators: IAdministrators | undefined =
+          administratorsMockList.find(
+            (a: IAdministrators) => a._id?.toString() == administratorId
+          );
+
+        return admnistrators ?? null;
+      }
+    );
+
+  readOneByEmail = jest
+    .fn()
+    .mockImplementation(async (params: { email: string }) => {
       const { email } = params;
-      return await administratorsMockList.find((a: IAdministrators) => a.email === email);
+      return await administratorsMockList.find(
+        (a: IAdministrators) => a.email === email
+      );
     });
 
   queryMockList(
