@@ -60,11 +60,11 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
       }
     );
 
-    readOne = jest.fn().mockImplementation(async (params: { id: string }): Promise<IAdministrators | null> => {
-      const { id } = params;
+    readOne = jest.fn().mockImplementation(async (params: { administratorId: string }): Promise<IAdministrators | null> => {
+      const { administratorId } = params;
   
       const admnistrators: IAdministrators | undefined = administratorsMockList.find(
-        (a: IAdministrators) => a._id?.toString() == id,
+        (a: IAdministrators) => a._id?.toString() == administratorId,
       );
   
       return admnistrators ?? null;
