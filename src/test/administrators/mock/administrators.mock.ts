@@ -87,6 +87,21 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
       );
     });
 
+  update = jest
+    .fn()
+    .mockImplementation(async (params: { administrator: IAdministrators }) => {
+      const { administrator } = params;
+      const admin = await administratorsMockList.find(
+        (a: IAdministrators) => a._id === administrator._id
+      );
+
+      if (!admin) return null;
+
+      Object.assign(admin, administrator);
+
+      return admin!;
+    });
+
   queryMockList(
     params: IAdministratorsReadListParamsPagination
   ): Array<IAdministrators> {
