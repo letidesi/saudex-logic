@@ -2,6 +2,7 @@
 import { AppError } from "AppError";
 import { IAdministratorCreateDTO } from "../../../modules/administrators/useCases/create/administratorCreate.DTO";
 import { AdministratorCreateUseCase } from "../../../modules/administrators/useCases/create/administratorCreate.useCases";
+import { MockPasswordProvider } from "../../providers/password.provider.mock";
 import { AdministratorsServiceMock } from "../mock/administrators.mock";
 import { administratorsMockList } from "../mock/administrators.mockList";
 
@@ -11,7 +12,8 @@ function createSUT(): {
 	administratorsServiceMock: AdministratorsServiceMock;
 } {
 	const administratorsServiceMock = new AdministratorsServiceMock();
-	const administratorsCreateUseCase = new AdministratorCreateUseCase(administratorsServiceMock);
+	const mockPasswordProvider = new MockPasswordProvider();
+	const administratorsCreateUseCase = new AdministratorCreateUseCase(administratorsServiceMock, mockPasswordProvider);
 
 	return {
 		sut: administratorsCreateUseCase,
