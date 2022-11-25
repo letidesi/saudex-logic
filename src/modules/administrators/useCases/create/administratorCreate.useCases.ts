@@ -1,4 +1,5 @@
 import { AppError } from 'apperror';
+import { IPasswordProvider } from '../../../../config/providers/crypto';
 import { IAdministrators } from '../../repository/administrators.model';
 import { IAdministratorsRepository } from '../../repository/administrators.repository';
 import { IAdministratorCreateDTO, IAdministratorCreateResponse } from './administratorCreate.DTO';
@@ -11,7 +12,10 @@ export class AdministratorCreateUseCase {
 	 * Constructor for AdministratorCreateUseCase
 	 * @param administratorsRepository - Inject a {@link IFormRepository} implementation
 	 */
-	constructor(private administratorsRepository: IAdministratorsRepository) {}
+	constructor(
+			private administratorsRepository: IAdministratorsRepository,
+		 	private passwordProvider: IPasswordProvider,
+		) {}
 
 	/**
 	 * @param dto - {@link IAdministratorsCreateDTO}
@@ -62,11 +66,13 @@ export class AdministratorCreateUseCase {
 			});
 		}
 
+		const hash = await this.passwordProvider.generateHash({ password });
+
 		const createdAdministrators: IAdministrators = await this.administratorsRepository.create({
 			administrators: {
 				name,
 				email,
-				password,
+				password: hash,
 				confirmPassword,
                 termsOfUse,
 			},
