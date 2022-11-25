@@ -1,2 +1,2 @@
-export * from './user.readOne.DTO';
-export * from './user.readOne.UseCase';
+export * from './administrator.readOne.DTO';
+export * from './administrator.readOne.useCase';
