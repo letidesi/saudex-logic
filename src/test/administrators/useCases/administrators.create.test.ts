@@ -31,7 +31,7 @@ describe('Administrator Create', () => {
 	describe('Given the correct parameters', () => {
 
 		it('should create a new administrator', async () => {
-			const dto: IAdministratorCreateDTO = { name: name, email: email, password: password, confirmPassword: confirmPassword, termsOfUse: termsOfUse };
+			const dto: IAdministratorCreateDTO = { name: name, email: 'test2@exemplo.com.br', password: password, confirmPassword: confirmPassword, termsOfUse: termsOfUse };
 
 			const createdAdministrators = await sut.exec(dto);
 
@@ -39,12 +39,33 @@ describe('Administrator Create', () => {
 			expect(createdAdministrators).toBeTruthy();
 			expect(createdAdministrators._id).toBeTruthy();
 			expect(createdAdministrators.name).toEqual(name);
-			expect(createdAdministrators.email).toEqual(email);
+			expect(createdAdministrators.email).toBeTruthy();
 			expect(createdAdministrators.password).toEqual(password);
 			expect(createdAdministrators.confirmPassword).toEqual(password);
 			expect(createdAdministrators.termsOfUse).toEqual(termsOfUse);
 		});
 
+	});
+
+	describe('Given email that already exists on repository', () => {
+		const administratorRepoMock = administratorsMockList[0];
+
+		it("should throw an instance of AppError saying 'Já existe um administrador com o e-mail especificado.' on ptMessage", async () => {
+			try {
+				const ret = await sut.exec({
+					email: administratorRepoMock.email,
+					name: name, 
+				    password: password,
+					confirmPassword: confirmPassword, 
+					termsOfUse: termsOfUse
+				});
+				expect(ret).toBe(undefined);
+			} catch (error: unknown) {
+				expect(error).toBeInstanceOf(Error);
+				expect(error).toHaveProperty('ptMessage');
+				expect((error as AppError).ptMessage).toBe('Já existe um administrador com o e-mail especificado.');
+			}
+		});
 	});
 
 	describe('Given missing parameter name', () => {

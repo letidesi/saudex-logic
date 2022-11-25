@@ -1,6 +1,5 @@
 import {
   IAdministrators,
-  IAdministratorsCreate,
   IAdministratorsReadListParamsPagination,
   IAdministratorsRepository,
 } from "../../../modules/administrators";
@@ -11,7 +10,7 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
     .fn()
     .mockImplementation(
       async (params: {
-        administrators: IAdministratorsCreate;
+        administrators: IAdministrators;
       }): Promise<IAdministrators> => {
         const { administrators } = params;
         const { name, email, password, confirmPassword, termsOfUse } = administrators;
@@ -69,6 +68,11 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
       );
   
       return admnistrators ?? null;
+    });
+
+    readOneByEmail = jest.fn().mockImplementation(async (params: { email: string }) => {
+      const { email } = params;
+      return await administratorsMockList.find((a: IAdministrators) => a.email === email);
     });
 
   queryMockList(
