@@ -25,12 +25,13 @@ describe('Administrator Create', () => {
 	const name = administratorsMockList[0].name;
 	const email = administratorsMockList[0].email;
 	const password = administratorsMockList[0].password;
+	const confirmPassword = administratorsMockList[0].confirmPassword;
 	const termsOfUse = administratorsMockList[0].termsOfUse;
-	const createdAdminId = administratorsMockList[0]._id
+
 	describe('Given the correct parameters', () => {
 
-		it('should create a new form', async () => {
-			const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: email, password: password, termsOfUse: termsOfUse };
+		it('should create a new administrator', async () => {
+			const dto: IAdministratorCreateDTO = { name: name, email: email, password: password, confirmPassword: confirmPassword, termsOfUse: termsOfUse };
 
 			const createdAdministrators = await sut.exec(dto);
 
@@ -40,6 +41,7 @@ describe('Administrator Create', () => {
 			expect(createdAdministrators.name).toEqual(name);
 			expect(createdAdministrators.email).toEqual(email);
 			expect(createdAdministrators.password).toEqual(password);
+			expect(createdAdministrators.confirmPassword).toEqual(password);
 			expect(createdAdministrators.termsOfUse).toEqual(termsOfUse);
 		});
 
@@ -49,7 +51,7 @@ describe('Administrator Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: '', email: email, password: password, termsOfUse: termsOfUse};
+				const dto: IAdministratorCreateDTO = { name: '', email: email, password: password, confirmPassword: confirmPassword, termsOfUse: termsOfUse};
 
 				await sut.exec(dto);
 			} catch (error) {
@@ -64,7 +66,7 @@ describe('Administrator Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: '', password: password, termsOfUse: termsOfUse};
+				const dto: IAdministratorCreateDTO = { name: name, email: '', password: password, confirmPassword: confirmPassword, termsOfUse: termsOfUse};
 
 				await sut.exec(dto);
 			} catch (error) {
@@ -79,7 +81,7 @@ describe('Administrator Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: email, password: '', termsOfUse: termsOfUse};
+				const dto: IAdministratorCreateDTO = { name: name, email: email, password: '',  confirmPassword: confirmPassword, termsOfUse: termsOfUse};
 
 				await sut.exec(dto);
 			} catch (error) {
@@ -94,13 +96,28 @@ describe('Administrator Create', () => {
 
 		it('should throw an instance of AppError', async () => {
 			try {
-				const dto: IAdministratorCreateDTO = { _id: createdAdminId, name: name, email: email, password: password, termsOfUse: ''};
+				const dto: IAdministratorCreateDTO = { name: name, email: email, password: password, confirmPassword: confirmPassword, termsOfUse: ''};
 
 				await sut.exec(dto);
 			} catch (error) {
 				expect(error).toBeInstanceOf(Error);
 				expect(error).toHaveProperty('ptMessage');
 				expect((error as AppError).ptMessage).toBe('O parâmetro "termsOfUse" não foi fornecido.');
+			}
+		});
+	});
+
+	describe('should give an error if the password is different from the password confirmation', () => {
+
+		it('should throw an instance of AppError', async () => {
+			try {
+				const dto: IAdministratorCreateDTO = { name: name, email: email, password: password, confirmPassword: 'test', termsOfUse: termsOfUse};
+
+				await sut.exec(dto);
+			} catch (error) {
+				expect(error).toBeInstanceOf(Error);
+				expect(error).toHaveProperty('ptMessage');
+				expect((error as AppError).ptMessage).toBe('As senhas não são iguais.');
 			}
 		});
 	});
