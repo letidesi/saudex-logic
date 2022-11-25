@@ -1,5 +1,11 @@
-import { IAdministrators, IAdministratorsCreate } from "../../repository/administrators.model";
+import { IAdministrators } from "../../repository/administrators.model";
 
-export type IAdministratorCreateDTO = IAdministratorsCreate;
+export type IAdministratorCreateDTO = {
+    name: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+	termsOfUse: string;
+}
 
 export type IAdministratorCreateResponse = IAdministrators;
