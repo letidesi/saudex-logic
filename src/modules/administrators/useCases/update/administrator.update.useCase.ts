@@ -35,7 +35,7 @@ export class AdministratorUpdateUseCase {
     if (!ret) {
       throw new AppError({
         message: "administrator not found.",
-        ptMessage: "O usuário não foi encontrado.",
+        ptMessage: "O administrador não foi encontrado.",
       });
     }
 
