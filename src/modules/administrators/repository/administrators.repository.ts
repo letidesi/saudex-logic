@@ -8,6 +8,7 @@ export type IAdministratorsReadListParamsPagination = {
 };
 export interface IAdministratorsRepository {
   create(params: { administrators: IAdministrators }): Promise<IAdministrators>;
+  delete(params: { administratorId: string }): Promise<void>;
   readList(
     params: IAdministratorsReadListParamsPagination
   ): Promise<Array<IAdministrators>>;
@@ -16,5 +17,7 @@ export interface IAdministratorsRepository {
   ): Promise<number>;
   readOne(params: { administratorId: string }): Promise<IAdministrators | null>;
   readOneByEmail(params: { email: string }): Promise<IAdministrators | null>;
-  update(params: { administrator: IAdministrators }): Promise<IAdministrators | null>;
+  update(params: {
+    administrator: IAdministrators;
+  }): Promise<IAdministrators | null>;
 }
