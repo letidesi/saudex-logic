@@ -14,12 +14,13 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
         administrators: IAdministratorsCreate;
       }): Promise<IAdministrators> => {
         const { administrators } = params;
-        const { name, email, password, termsOfUse } = administrators;
+        const { name, email, password, confirmPassword, termsOfUse } = administrators;
         const newAdministrators: IAdministrators = {
           _id: "new_id",
           name,
           email,
           password,
+          confirmPassword,
           termsOfUse,
         };
         return newAdministrators;

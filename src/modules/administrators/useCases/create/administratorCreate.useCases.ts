@@ -18,7 +18,7 @@ export class AdministratorCreateUseCase {
 	 * @returns The created administratorsCreateUseCase
 	 */
 	async exec(dto: IAdministratorCreateDTO): Promise<IAdministratorCreateResponse> {
-		const { name, email, password, termsOfUse } = dto;
+		const { name, email, password, confirmPassword, termsOfUse } = dto;
 		if (!name) {
 			throw new AppError({
 				message: 'Parameter "name" was not provided.',
@@ -40,6 +40,13 @@ export class AdministratorCreateUseCase {
 			});
 		}
 
+		if (password != confirmPassword) {
+			throw new AppError({
+				message: 'The passwords are not the same.',
+				ptMessage: 'As senhas não são iguais.',
+			});
+		}
+
         if (!termsOfUse) {
 			throw new AppError({
 				message: 'Parameter "termsOfUse" was not provided.',
@@ -52,6 +59,7 @@ export class AdministratorCreateUseCase {
 				name,
 				email,
 				password,
+				confirmPassword,
                 termsOfUse,
 			},
 		});

@@ -1,5 +1,5 @@
-import { IAdministrators } from "../../repository/administrators.model";
+import { IAdministrators, IAdministratorsCreate } from "../../repository/administrators.model";
 
-export type IAdministratorCreateDTO = IAdministrators;
+export type IAdministratorCreateDTO = IAdministratorsCreate;
 
 export type IAdministratorCreateResponse = IAdministrators;
