@@ -54,6 +54,14 @@ export class AdministratorCreateUseCase {
 			});
 		}
 
+		const administratorAlreadyExists = await this.administratorsRepository.readOneByEmail({ email });
+		if (administratorAlreadyExists) {
+			throw new AppError({
+				message: 'An administrator with the specified e-mail already exists.',
+				ptMessage: 'Já existe um administrador com o e-mail especificado.',
+			});
+		}
+
 		const createdAdministrators: IAdministrators = await this.administratorsRepository.create({
 			administrators: {
 				name,
