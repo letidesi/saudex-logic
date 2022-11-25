@@ -26,6 +26,24 @@ export class AdministratorsServiceMock implements IAdministratorsRepository {
         return newAdministrators;
       }
     );
+
+  delete = jest
+    .fn()
+    .mockImplementation(
+      async (params: {
+        administratorId: string;
+      }): Promise<IAdministrators | null> => {
+        const { administratorId } = params;
+
+        const administratorToRemove: IAdministrators | undefined =
+          administratorsMockList.find(
+            (a: IAdministrators) => a._id?.toString() == administratorId
+          );
+
+        return administratorToRemove ?? null;
+      }
+    );
+
   readList = jest
     .fn()
     .mockImplementation(
